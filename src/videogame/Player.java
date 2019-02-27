@@ -19,8 +19,7 @@ public class Player extends Item {
     private int height;
     private int speed;
     private Game game;
-    private int lifes;
-    private int dropped;
+    private boolean flag;
 
     public Player(int x, int y, int direction, int width, int height, Game game) {
         super(x, y);
@@ -28,9 +27,8 @@ public class Player extends Item {
         this.width = width;
         this.height = height;
         this.game = game;
-        this.speed = 10;
-        this.lifes = (int) (Math.random() * 3+2);
-        this.dropped = 7;
+        this.speed = 5;
+        flag = false;
     }
 
     public int getDirection() {
@@ -56,43 +54,19 @@ public class Player extends Item {
     public void setHeight(int height) {
         this.height = height;
     }
-
-    public int getLifes() {
-        return lifes;
-    }
-
-    public void setLifes(int lifes) {
-        this.lifes = lifes;
-    }
-
-    public int getDropped() {
-        return dropped;
-    }
-
-    public void setDropped(int dropped) {
-        this.dropped = dropped;
-    }
-
     @Override
     public void tick() {
-        if (lifes > 0) {
 // moving player depending on flags
-            if (game.getKeyManager().Q) {
-                setY(getY() - speed);//UP
+            if (game.getKeyManager().left) {
                 setX(getX() - speed);//Left
+                flag=true;
             }
-            if (game.getKeyManager().A) {
-                setY(getY() + speed); //Down
-                setX(getX() - speed);//Left
-            }
-            if (game.getKeyManager().E) {
-                setY(getY() - speed);//UP
+            
+            if (game.getKeyManager().right) {
                 setX(getX() + speed);//Right
+                flag=false;
             }
-            if (game.getKeyManager().D) {
-                setY(getY() + speed); //Down
-                setX(getX() + speed); //Right
-            }
+        
             
             // reset x position and y position if colision
             if (getX() + 150 > game.getWidth()) {
@@ -100,12 +74,6 @@ public class Player extends Item {
             } else if (getX() < 0) {
                 setX(0);
             }
-            if (getY() + 150 > game.getHeight()) {
-                setY(game.getHeight() - 150);
-            } else if (getY() < 0) {
-                setY(0);
-            }
-        }
     }
 
     public Rectangle getPerimetro() {
@@ -120,6 +88,10 @@ public class Player extends Item {
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(Assets.van, getX(), getY(), getWidth(), getHeight(), null);
+        if(flag)
+        g.drawImage(Assets.vanLeft, getX(), getY(), getWidth(), getHeight(), null);
+        else
+            g.drawImage(Assets.vanRight, getX(), getY(), getWidth(), getHeight(), null);
+            
     }
 }

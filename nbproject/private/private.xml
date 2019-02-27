@@ -3,13 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/PatoSaldivar/Desktop/Videojuegos,%20Java/BreakingBad%20v1/src/images/Pill.png</file>
             <file>file:/Users/PatoSaldivar/Desktop/Videojuegos,%20Java/BreakingBad%20v1/src/videogame/Player.java</file>
-            <file>file:/Users/PatoSaldivar/Desktop/Videojuegos,%20Java/BreakingBad%20v1/src/images/VanLeft.png</file>
-            <file>file:/Users/PatoSaldivar/Desktop/Videojuegos,%20Java/BreakingBad%20v1/src/videogame/Brick.java</file>
-            <file>file:/Users/PatoSaldivar/Desktop/Videojuegos,%20Java/BreakingBad%20v1/src/images/VanRight.png</file>
             <file>file:/Users/PatoSaldivar/Desktop/Videojuegos,%20Java/BreakingBad%20v1/src/videogame/Game.java</file>
             <file>file:/Users/PatoSaldivar/Desktop/Videojuegos,%20Java/BreakingBad%20v1/src/videogame/Assets.java</file>
+            <file>file:/Users/PatoSaldivar/Desktop/Videojuegos,%20Java/BreakingBad%20v1/src/videogame/KeyManager.java</file>
         </group>
     </open-files>
 </project-private>
