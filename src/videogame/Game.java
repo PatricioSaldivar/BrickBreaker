@@ -85,7 +85,7 @@ public class Game implements Runnable {
     private void init() {
          display = new Display(title, getWidth(), getHeight());  
          Assets.init();
-         player = new Player(getWidth()/2-75, getHeight()/2-75, 1, 150, 150, this);
+         player = new Player(getWidth()/2-75, getHeight()-50, 1, 150, 50, this);
          int iPosX;
          int iPosY;
          int iNum = (int) (Math.random() * 5 +10);
@@ -153,11 +153,6 @@ public class Game implements Runnable {
                 bad.setY(iPosY);
                 bad.setX((int) (Math.random() * (getWidth()-75)));
             }
-            //Checks if there are more than 10 dropped bads so the lifes will decrease vy 1
-            if(player.getDropped()<=0){
-                player.setLifes(player.getLifes()-1);
-                player.setDropped(player.getDropped()+10);
-            }
         }
         
 
@@ -178,7 +173,7 @@ public class Game implements Runnable {
         else
         {
             g = bs.getDrawGraphics();
-            if(player.getLifes()>0){
+           
             g.drawImage(Assets.background, 0, 0, width, height, null);
             player.render(g);
              for (int i = 0; i < bads.size(); i++) {
@@ -187,17 +182,8 @@ public class Game implements Runnable {
             }
             //Set font color to white for the text of Lifes Left:
             g.setColor(Color.white);
-            g.drawString("Lifes left:"+player.getLifes(), 10, getHeight()-20);
             g.drawString("Score:"+this.getScore(), getWidth()-100, getHeight()-20);
             
-            }else{
-                g.drawImage(Assets.background, 0, 0, width, height, null);
-                // Set the font color to black
-                g.setColor(Color.white);
-                //Set the font size to 64
-                g.getFont().deriveFont(g.getFont().getStyle(), 256);
-                g.drawString("GAME OVER", width/2-50, height/2);
-            }
                 bs.show();
             
                 g.dispose();
