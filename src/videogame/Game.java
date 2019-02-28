@@ -86,12 +86,8 @@ public class Game implements Runnable {
     private void init() {
          display = new Display(title, getWidth(), getHeight());  
          Assets.init();
-<<<<<<< HEAD
-         player = new Player(getWidth()/2-75, getHeight()/2-75, 1, 150, 150, this);
          bullet = new Bullet(getWidth(), getHeight(), 1, 50, 50, this);
-=======
          player = new Player(getWidth()/2-75, getHeight()-50, 1, 150, 50, this);
->>>>>>> Pato
          int iPosX;
          int iPosY;
          int iNum = (int) (Math.random() * 5 +10);
