@@ -24,6 +24,7 @@ public class Game implements Runnable {
     private Thread thread;          // thread to create the game
     private boolean running;        // to set the game
     private Player player;          // to use a player
+    private Bullet bullet;          // to use a bullet
     private LinkedList<Brick> bads;                // to use a bad guy
     private KeyManager keyManager;  // to manage the keyboard
     private int score;                 // to manage score
@@ -86,6 +87,7 @@ public class Game implements Runnable {
          display = new Display(title, getWidth(), getHeight());  
          Assets.init();
          player = new Player(getWidth()/2-75, getHeight()/2-75, 1, 150, 150, this);
+         bullet = new Bullet(getWidth(), getHeight(), 1, 50, 50, this);
          int iPosX;
          int iPosY;
          int iNum = (int) (Math.random() * 5 +10);
@@ -143,6 +145,7 @@ public class Game implements Runnable {
         keyManager.tick();
         // avancing player and bads and check collisions 
         player.tick();
+        bullet.tick();
         for (int i = 0; i < bads.size(); i++) {
             Brick bad =  bads.get(i);
             bad.tick();
@@ -181,6 +184,7 @@ public class Game implements Runnable {
             if(player.getLifes()>0){
             g.drawImage(Assets.background, 0, 0, width, height, null);
             player.render(g);
+            bullet.render(g);
              for (int i = 0; i < bads.size(); i++) {
                 Brick bad =  bads.get(i);
                 bad.render(g);
