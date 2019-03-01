@@ -61,22 +61,7 @@ public class Bullet extends Item {
     public void tick() {
         // moving bullet depending on flags
         this.animationBullet.tick();
-            if (game.getKeyManager().Q) {
-                setY(getY() - speed);//UP
-                setX(getX() - speed);//Left
-            }
-            if (game.getKeyManager().A) {
-                setY(getY() + speed); //Down
-                setX(getX() - speed);//Left
-            }
-            if (game.getKeyManager().E) {
-                setY(getY() - speed);//UP
-                setX(getX() + speed);//Right
-            }
-            if (game.getKeyManager().D) {
-                setY(getY() + speed); //Down
-                setX(getX() + speed); //Right
-            }
+
             
             // reset x position and y position if colision
             if (getX() + 150 > game.getWidth()) {
