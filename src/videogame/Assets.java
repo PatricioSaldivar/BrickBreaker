@@ -19,7 +19,7 @@ public class Assets {
     public static BufferedImage bullet[];   // pictures of the bullet changing color
     public static BufferedImage vanLeft;     // to store the player image
     public static BufferedImage vanRight;     // to store the player image
-
+    public static BufferedImage gameOver;      //to store gameover image
     public static BufferedImage brick;
     public static SoundClip boo;
     public static SoundClip applause;
@@ -30,6 +30,7 @@ public class Assets {
     public static void init() {
         background = ImageLoader.loadImage("/images/Background.png");
         brick = ImageLoader.loadImage("/images/Pill.png");
+        gameOver = ImageLoader.loadImage("/images/gameover.jpg");
 
         //getting the sprites from the picture
         sprites = ImageLoader.loadImage("/images/bullet_enemy.png");
