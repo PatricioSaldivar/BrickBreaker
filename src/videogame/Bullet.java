@@ -20,6 +20,7 @@ public class Bullet extends Item {
     private int height;                     //to store the height of the bullet
     private Game game;                      //to store the Game
     private Animation animationBullet;      //to store the animation of the bullet
+    private boolean endGame;                //to store the game status depending in bullet position
     
     public Bullet(int x, int y, int width, int height, Game game) {
         super(x, y);
@@ -28,6 +29,7 @@ public class Bullet extends Item {
         this.game = game;
         velX = 5;
         velY = -5;
+        endGame = false;
         this.animationBullet = new Animation(Assets.bullet,100);
     }
     
@@ -94,6 +96,24 @@ public class Bullet extends Item {
         this.height = height;
     }
     
+     /**
+     * To get the status of the game
+     * @return an <code>int</code> value with the width
+     */
+    public boolean isEndGame() {
+        return endGame;
+    }
+    
+    /**
+     * Set the status of the game
+     * @param endGame <b>endGame</b> value with boolean
+     */
+    public void setEndGame(boolean endGame) {
+        this.endGame = endGame;
+    }
+    
+    
+    
     @Override
     public void tick() {
         //change animation of the bullet
@@ -111,10 +131,7 @@ public class Bullet extends Item {
             }
             
             if (getY() + 50 > game.getHeight()) {
-                setY(game.getPlayer().getY()-50);
-                setX(game.getPlayer().getX());
-                setVelX(getVelX());
-                setVelY(-getVelY());
+                endGame = true;
             } else if (getY() < 0) {
                 setVelY(-getVelY());
             }
@@ -127,6 +144,7 @@ public class Bullet extends Item {
      public Rectangle getPerimetro() {
         return new Rectangle(getX(), getY(), getWidth(), getHeight());
     }
+     
      
       public boolean intersecta(Object obj) {
         return obj instanceof Player && getPerimetro().intersects(((Player) obj).getPerimetro());

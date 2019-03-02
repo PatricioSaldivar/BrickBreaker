@@ -173,9 +173,12 @@ public class Game implements Runnable {
             display.getCanvas().createBufferStrategy(3);
         }
         else
-        {
+        {   
+            if(bullet.isEndGame()){
+                g = bs.getDrawGraphics();
+                g.drawImage(Assets.gameOver,0,0,width,height,null);
+            } else {
             g = bs.getDrawGraphics();
-           
             g.drawImage(Assets.background, 0, 0, width, height, null);
             player.render(g);
             bullet.render(g);
@@ -186,10 +189,11 @@ public class Game implements Runnable {
             //Set font color to white for the text of Lifes Left:
             g.setColor(Color.white);
             g.drawString("Score:"+this.getScore(), getWidth()-100, getHeight()-20);
-            
+            }
                 bs.show();
             
                 g.dispose();
+            
         }
        
     }
