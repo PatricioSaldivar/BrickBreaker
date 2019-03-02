@@ -79,14 +79,13 @@ public class Game implements Runnable {
     }
     
     
-    
     /**
      * initializing the display window of the game
      */
     private void init() {
          display = new Display(title, getWidth(), getHeight());  
          Assets.init();
-         bullet = new Bullet(getWidth(), getHeight(), 1, 50, 50, this);
+         bullet = new Bullet(getWidth()/2, getHeight()/2, 50, 50, this);
          player = new Player(getWidth()/2-75, getHeight()-50, 1, 150, 50, this);
          int iPosX;
          int iPosY;
