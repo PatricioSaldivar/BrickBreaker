@@ -89,7 +89,7 @@ public class Game implements Runnable {
         display = new Display(title, getWidth(), getHeight());
         Assets.init();
         player = new Player(getWidth() / 2 - 75, getHeight() - 50, 1, 150, 50, this);
-        bullet = new Bullet(player.getX(), player.getY(), 1, 20, 20, this);
+        bullet = new Bullet( player.getX()+(player.getWidth()/2) , player.getY()-20, 20, 20, this);
         int iPosX;
         int iPosY;
         int iRen;
@@ -148,19 +148,21 @@ public class Game implements Runnable {
     private void tick() {
         keyManager.tick();
         // avancing player and bricks and check collisions 
-        if (!keyManager.pause) {
+        if (!keyManager.pause && keyManager.start) {
             player.tick();
             bullet.tick();
+            if(player.intersecta(bullet)){
+                bullet.setVelY(-bullet.getVelY());
+            }
             for (int i = 0; i < bricks.size(); i++) {
                 Brick brick = bricks.get(i);
                 brick.tick();
-                if (player.intersecta(brick)) {
+                if (bullet.intersecta(brick)) {
+                    bullet.setVelY(-bullet.getVelY());
                     this.setScore(this.getScore() + 10);
                     Assets.applause.play();
-                    /*int iPosY = (int) (Math.random() * getHeight() * -1);
-                    brick.setY(iPosY);
-                    brick.setX((int) (Math.random() * (getWidth() - 75)));
-                     */
+                    brick.setY(-60);
+   
                 }
             }
         }
