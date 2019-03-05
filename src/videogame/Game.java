@@ -80,7 +80,7 @@ public class Game implements Runnable {
 
     public void setScore(int score) {
         this.score = score;
-    }
+    }    
 
     /**
      * initializing the display window of the game
@@ -154,6 +154,10 @@ public class Game implements Runnable {
             if(player.intersecta(bullet)){
                 bullet.setVelY(-bullet.getVelY());
             }
+            // If there are no more bricks in the game (When yo get 650 points), active bullet.EndGame to show Game Over image
+            if(this.getScore() == 650){
+                bullet.setEndGame(true);
+            }        
             for (int i = 0; i < bricks.size(); i++) {
                 Brick brick = bricks.get(i);
                 brick.tick();
@@ -183,12 +187,12 @@ public class Game implements Runnable {
         }
         else
         {   
+            g = bs.getDrawGraphics();
+           
+            //Shows Game Over image and stops games if the bullet get to the bottom of the display of you win
             if(bullet.isEndGame()){
-                g = bs.getDrawGraphics();
                 g.drawImage(Assets.gameOver,0,0,width,height,null);
             } else {
-            g = bs.getDrawGraphics();
-
             g.drawImage(Assets.background, 0, 0, width, height, null);
             player.render(g);
             bullet.render(g);
