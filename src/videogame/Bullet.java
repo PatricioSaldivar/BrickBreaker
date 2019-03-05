@@ -14,72 +14,142 @@ import java.awt.Rectangle;
  */
 public class Bullet extends Item {
     
-    private int direction;
-    private int width;
-    private int height;
-    private int speed;
-    private Game game;
+    private int velX;                       //to store the direction in X
+    private int velY;                       //to store the direction in Y
+    private int width;                      //to store the width of the bullet
+    private int height;                     //to store the height of the bullet
+    private Game game;                      //to store the Game
     private Animation animationBullet;      //to store the animation of the bullet
+    private boolean endGame;                //to store the game status depending in bullet position
     
-    public Bullet(int x, int y, int direction, int width, int height, Game game) {
+    public Bullet(int x, int y, int width, int height, Game game) {
         super(x, y);
-        this.direction = direction;
         this.width = width;
         this.height = height;
         this.game = game;
-        this.speed = 5;
+        velX = 5;
+        velY = -5;
+        endGame = false;
         this.animationBullet = new Animation(Assets.bullet,100);
     }
     
-     public int getDirection() {
-        return direction;
+    /**
+     * To get the direction in X of the bullet
+     * @return an <code>int</code> value with the direction
+     */
+    public int getVelX() {
+        return velX;
     }
-
+    
+    /**
+     * To get the direction in Y of the bullet
+     * @return an <code>int</code> value with the direction
+     */
+    public int getVelY() {
+        return velY;
+    }
+    
+    /**
+     * To get the width of the bullet
+     * @return an <code>int</code> value with the width
+     */
     public int getWidth() {
         return width;
     }
-
+    
+     /**
+     * To get the height of the bullet
+     * @return an <code>int</code> value with the height
+     */
     public int getHeight() {
         return height;
     }
 
-    public void setDirection(int direction) {
-        this.direction = direction;
+    /**
+     * Set the direction in X of the bullet
+     * @param velX <b>velX</b> value with the direction
+     */
+    public void setVelX(int velX) {
+        this.velX = velX;
     }
-
+    
+     /**
+     * Set the direction in Y of the bullet
+     * @param velY <b>velY</b> value with the direction
+     */
+    public void setVelY(int velY) {
+        this.velY = velY;
+    }
+     /**
+     * Set the width of the bullet
+     * @param width <b>width</b> value with the width
+     */
     public void setWidth(int width) {
         this.width = width;
     }
 
+     /**
+     * Set the height of the bullet
+     * @param height <b>height</b> value with the height
+     */
     public void setHeight(int height) {
         this.height = height;
+    }
+    
+     /**
+     * To get the status of the game
+     * @return an <code>int</code> value with the width
+     */
+    public boolean isEndGame() {
+        return endGame;
+    }
+    
+    /**
+     * Set the status of the game
+     * @param endGame <b>endGame</b> value with boolean
+     */
+    public void setEndGame(boolean endGame) {
+        this.endGame = endGame;
     }
     
     
     
     @Override
     public void tick() {
-        // moving bullet depending on flags
+        //change animation of the bullet
         this.animationBullet.tick();
-
-            
-            // reset x position and y position if colision
-            if (getX() + 150 > game.getWidth()) {
-                setX(game.getWidth() - 150);
+        
+            // change direction of x position and y position if colision
+            if (getX() + 50 > game.getWidth()) {
+                setVelX(-getVelX());
             } else if (getX() < 0) {
-                setX(0);
+                setVelX(-getVelX());
             }
-            if (getY() + 150 > game.getHeight()) {
-                setY(game.getHeight() - 150);
+                    
+            if(this.intersecta(game.getPlayer())){
+                setVelY(-getVelY());
+            }
+            
+            if (getY() + 50 > game.getHeight()) {
+                endGame = true;
             } else if (getY() < 0) {
-                setY(0);
+                setVelY(-getVelY());
             }
+            
+            //set direction of movement of the bullet
+            setX(getX() + velX);
+            setY(getY() + velY);
     }
     
      public Rectangle getPerimetro() {
         return new Rectangle(getX(), getY(), getWidth(), getHeight());
     }
      
+     
+      public boolean intersecta(Object obj) {
+        return obj instanceof Player && getPerimetro().intersects(((Player) obj).getPerimetro());
+    }
+    
      @Override
     public void render(Graphics g) {
         g.drawImage(animationBullet.getCurrentFrame(), getX(), getY(), getWidth(), getHeight(), null);
