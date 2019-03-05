@@ -81,17 +81,11 @@ public class Game implements Runnable {
     public void setScore(int score) {
         this.score = score;
     }
-<<<<<<< HEAD
 
-=======
-    
-    
->>>>>>> refs/remotes/origin/Diego
     /**
      * initializing the display window of the game
      */
     private void init() {
-<<<<<<< HEAD
         display = new Display(title, getWidth(), getHeight());
         Assets.init();
         player = new Player(getWidth() / 2 - 75, getHeight() - 50, 1, 150, 50, this);
@@ -112,26 +106,7 @@ public class Game implements Runnable {
         }
 
         display.getJframe().addKeyListener(keyManager);
-=======
-         display = new Display(title, getWidth(), getHeight());  
-         Assets.init();
-         bullet = new Bullet(getWidth()/2, getHeight()/2, 50, 50, this);
-         player = new Player(getWidth()/2-75, getHeight()-50, 1, 150, 50, this);
-         int iPosX;
-         int iPosY;
-         int iNum = (int) (Math.random() * 5 +10);
-       // Se escoje una mitad con direccion izquierda y la otra a la derecha
-         for (int i = 1; i <= iNum; i++) {
-           iPosX = (int) (Math.random() * (getWidth()-75));
-           iPosY = (int) (Math.random() * (getHeight())*-1);
-           if(i%2==0)
-            bads.add(new Brick(iPosX, iPosY, 75, 75,1, this));
-           else
-               bads.add(new Brick(iPosX, iPosY, 75, 75,-1, this));
- 
-         }
-         display.getJframe().addKeyListener(keyManager);
->>>>>>> refs/remotes/origin/Diego
+
 
     }
 
@@ -202,11 +177,7 @@ public class Game implements Runnable {
          */
         if (bs == null) {
             display.getCanvas().createBufferStrategy(3);
-<<<<<<< HEAD
-        } else {
-            g = bs.getDrawGraphics();
 
-=======
         }
         else
         {   
@@ -215,7 +186,7 @@ public class Game implements Runnable {
                 g.drawImage(Assets.gameOver,0,0,width,height,null);
             } else {
             g = bs.getDrawGraphics();
->>>>>>> refs/remotes/origin/Diego
+
             g.drawImage(Assets.background, 0, 0, width, height, null);
             player.render(g);
             bullet.render(g);
@@ -225,20 +196,13 @@ public class Game implements Runnable {
             }
             //Set font color to white for the text of Lifes Left:
             g.setColor(Color.white);
-<<<<<<< HEAD
-            g.drawString("Score:" + this.getScore(), getWidth() - 100, getHeight() - 20);
 
-            bs.show();
-
-            g.dispose();
-=======
             g.drawString("Score:"+this.getScore(), getWidth()-100, getHeight()-20);
             }
                 bs.show();
             
                 g.dispose();
             
->>>>>>> refs/remotes/origin/Diego
         }
 
     }
