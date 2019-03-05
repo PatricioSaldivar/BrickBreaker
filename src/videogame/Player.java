@@ -75,12 +75,13 @@ public class Player extends Item {
                 setX(0);
             }
     }
-
+    
+     
     public Rectangle getPerimetro() {
 
-        return new Rectangle(getX(), getY(), getWidth(), getHeight());
+        return new Rectangle(getX(), getY(), getWidth() , getHeight());
     }
-
+    
     public boolean intersecta(Object obj) {
 
         return obj instanceof Bullet && getPerimetro().intersects(((Bullet) obj).getPerimetro());
