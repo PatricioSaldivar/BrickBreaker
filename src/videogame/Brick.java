@@ -14,29 +14,23 @@ import java.awt.Rectangle;
  */
 public class Brick extends Item {
 
-    private int direction;
     private int width;
     private int height;
     private Game game;
-    public Brick(int x, int y, int width, int height,int direction, Game game) {
+    private int index;
+    public Brick(int x, int y, int width, int height, Game game, int index) {
         super(x, y);
         this.width = width;
         this.height = height;
         this.game = game;
-        this.direction = direction;
+        this.index = index;
     }
 
     /**
      *
      * @return
      */
-    public int getDirection() {
-        return direction;
-    }
 
-    public void setDirection(int direction) {
-        this.direction = direction;
-    }
 
     public int getWidth() {
         return width;
@@ -67,6 +61,6 @@ public class Brick extends Item {
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(Assets.brick, getX(), getY(), getWidth(), getHeight(), null);
+        g.drawImage(Assets.brick[index], getX(), getY(), getWidth(), getHeight(), null);
     }
 }

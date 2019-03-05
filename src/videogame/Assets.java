@@ -20,7 +20,7 @@ public class Assets {
     public static BufferedImage vanLeft;     // to store the player image
     public static BufferedImage vanRight;     // to store the player image
 
-    public static BufferedImage brick;
+    public static BufferedImage brick[];
     public static SoundClip boo;
     public static SoundClip applause;
 
@@ -28,13 +28,18 @@ public class Assets {
      * initializing the images of the game
      */
     public static void init() {
+        brick = new BufferedImage[4];
         background = ImageLoader.loadImage("/images/Background.png");
-        brick = ImageLoader.loadImage("/images/Pill.png");
+        brick[0] = ImageLoader.loadImage("/images/Pill1.png");
+        brick[1] = ImageLoader.loadImage("/images/Pill2.png");
+        brick[2] = ImageLoader.loadImage("/images/Pill3.png");
+        brick[3] = ImageLoader.loadImage("/images/Pill4.png");
 
         //getting the sprites from the picture
         sprites = ImageLoader.loadImage("/images/bullet_enemy.png");
         boo = new SoundClip ("/sounds/Boo.wav");
         applause = new SoundClip ("/sounds/Applause.wav");
+        
         //creating array of images before animations
         SpreadSheet spritesheet = new SpreadSheet(sprites);
         bullet = new BufferedImage[8];
