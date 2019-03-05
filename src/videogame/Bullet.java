@@ -29,8 +29,8 @@ public class Bullet extends Item {
         this.width = width;
         this.height = height;
         this.game = game;
-        velX = 2;
-        velY = -2;
+        velX = 3;
+        velY = -3;
         endGame = false;
         this.animationBullet = new Animation(Assets.bullet,100);
     }

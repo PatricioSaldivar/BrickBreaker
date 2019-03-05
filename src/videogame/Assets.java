@@ -15,26 +15,29 @@ public class Assets {
 
     public static BufferedImage background; // to store background image
 
-    public static BufferedImage sprites;    // to store the sprites
-    public static BufferedImage bullet[];   // pictures of the bullet changing color
-    public static BufferedImage vanLeft;     // to store the player image
-    public static BufferedImage vanRight;     // to store the player image
-    public static BufferedImage brick[];
-    public static BufferedImage gameOver;      //to store gameover image
+    public static BufferedImage sprites;        // to store the sprites
+    public static BufferedImage bullet[];      // to store pictures of the bullet changing color
+    public static BufferedImage vanLeft;       // to store the player image
+    public static BufferedImage vanRight;      // to store the player image
+    public static BufferedImage brick[];       // to store the diferent bricks
+    public static BufferedImage gameOver;      // to store gameover image
+    public static BufferedImage youWin;        // to store youwin image
     public static SoundClip boo;
     public static SoundClip applause;
+    
 
     /**
      * initializing the images of the game
      */
     public static void init() {
         brick = new BufferedImage[4];
-        background = ImageLoader.loadImage("/images/Background.png");
+        background = ImageLoader.loadImage("/images/fondoBB.jpg");
         brick[0] = ImageLoader.loadImage("/images/Pill1.png");
         brick[1] = ImageLoader.loadImage("/images/Pill2.png");
         brick[2] = ImageLoader.loadImage("/images/Pill3.png");
         brick[3] = ImageLoader.loadImage("/images/Pill4.png");       
         gameOver = ImageLoader.loadImage("/images/gameover.jpg");
+        youWin = ImageLoader.loadImage("/images/youwin.jpg");
 
 
         //getting the sprites from the picture
