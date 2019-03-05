@@ -151,9 +151,16 @@ public class Game implements Runnable {
         if (!keyManager.pause && keyManager.start) {
             player.tick();
             bullet.tick();
+            //Set direction of bullet depending on which part of the player the bullet hits
             if(player.intersecta(bullet)){
                 bullet.setVelY(-bullet.getVelY());
+            if((bullet.getX() > (player.getX() - player.getWidth() / 2)) && (bullet.getX() < (player.getX() + player.getWidth() / 2)) && (bullet.getY() < player.getY()) && (bullet.getY() > (player.getY() - player.getHeight() /2))){
+                bullet.setVelX(-Math.abs(bullet.getVelX()));
+             } else {
+                 bullet.setVelX(Math.abs(bullet.getVelX()));
+             }
             }
+
             // If there are no more bricks in the game (When yo get 650 points), active bullet.EndGame to show Game Over image
             if(this.getScore() == 650){
                 bullet.setEndGame(true);
