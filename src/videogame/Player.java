@@ -83,7 +83,7 @@ public class Player extends Item {
 
     public boolean intersecta(Object obj) {
 
-        return obj instanceof Brick && getPerimetro().intersects(((Brick) obj).getPerimetro());
+        return obj instanceof Bullet && getPerimetro().intersects(((Bullet) obj).getPerimetro());
     }
 
     @Override

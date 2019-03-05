@@ -13,25 +13,39 @@ import java.awt.event.KeyListener;
  * @author antoniomejorado
  */
 public class KeyManager implements KeyListener {
-    
+
     public boolean left;      // flag to move left the player
     public boolean right;    // flag to move right the player
-
+    public boolean start;   //flag to start moving (game)
+    public boolean pause = false;   //flag to pause the game
 
     private boolean keys[];  // to store all the flags for every key
-    
+
     public KeyManager() {
         keys = new boolean[256];
     }
-    
+
+    public void setStart(boolean start) {
+        this.start = start;
+    }
+
     @Override
     public void keyTyped(KeyEvent e) {
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-        // set true to every key pressed
-        keys[e.getKeyCode()] = true;
+        //Sets start if any key is pressed
+        start = true;
+        // set true or false depending on the pause botton
+        if (e.getKeyCode() == KeyEvent.VK_P) {
+            pause = !pause;
+        }
+            //If pause is false the keys will become true, if not nothing happens
+            if (!pause) {
+                keys[e.getKeyCode()] = true;
+            }
+        
     }
 
     @Override
@@ -39,7 +53,7 @@ public class KeyManager implements KeyListener {
         // set false to every key released
         keys[e.getKeyCode()] = false;
     }
-    
+
     /**
      * to enable or disable moves on every tick
      */

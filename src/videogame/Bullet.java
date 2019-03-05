@@ -7,6 +7,7 @@ package videogame;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import static java.lang.Math.abs;
 
 /**
  *
@@ -16,6 +17,7 @@ public class Bullet extends Item {
     
     private int velX;                       //to store the direction in X
     private int velY;                       //to store the direction in Y
+    private int aux;                        // to store the velX in case of getting on the center
     private int width;                      //to store the width of the bullet
     private int height;                     //to store the height of the bullet
     private Game game;                      //to store the Game
@@ -27,8 +29,8 @@ public class Bullet extends Item {
         this.width = width;
         this.height = height;
         this.game = game;
-        velX = 5;
-        velY = -5;
+        velX = 2;
+        velY = -2;
         endGame = false;
         this.animationBullet = new Animation(Assets.bullet,100);
     }
@@ -120,18 +122,15 @@ public class Bullet extends Item {
         this.animationBullet.tick();
         
             // change direction of x position and y position if colision
-            if (getX() + 50 > game.getWidth()) {
+            if (getX() + getWidth() > game.getWidth()) {
                 setVelX(-getVelX());
             } else if (getX() < 0) {
                 setVelX(-getVelX());
             }
-                    
-            if(this.intersecta(game.getPlayer())){
-                setVelY(-getVelY());
-            }
-            
-            if (getY() + 50 > game.getHeight()) {
+                   
+            if (getY()+getHeight() > game.getHeight()) {
                 endGame = true;
+                
             } else if (getY() < 0) {
                 setVelY(-getVelY());
             }
@@ -147,7 +146,7 @@ public class Bullet extends Item {
      
      
       public boolean intersecta(Object obj) {
-        return obj instanceof Player && getPerimetro().intersects(((Player) obj).getPerimetro());
+        return obj instanceof Brick && getPerimetro().intersects(((Brick) obj).getPerimetro());
     }
     
      @Override
