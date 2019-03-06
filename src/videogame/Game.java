@@ -8,6 +8,7 @@ package videogame;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import static java.lang.Math.abs;
 import java.util.ArrayList;
 
 /**
@@ -31,6 +32,7 @@ public class Game implements Runnable {
     private int score;                 // to manage score
     private boolean win;            // to manage if the game is ended and you win
     private int countBricks;        // To store the total of bricks
+    private Resources resources;    //To load and save the information of the game
 
     /**
      * to create title, width and height and set the game is still not running
@@ -45,6 +47,7 @@ public class Game implements Runnable {
         this.height = height;
         running = false;
         keyManager = new KeyManager();
+        resources= new Resources(this);
 
     }
 
@@ -81,6 +84,23 @@ public class Game implements Runnable {
     public void setScore(int score) {
         this.score = score;
     }
+
+    public Bullet getBullet() {
+        return bullet;
+    }
+
+    public int getCountBricks() {
+        return countBricks;
+    }
+
+    public void setCountBricks(int countBricks) {
+        this.countBricks = countBricks;
+    }
+    
+        public ArrayList<Brick> getBricks() {
+        return bricks;
+    }
+    
 
     /**
      * initializing the display window of the game
@@ -131,7 +151,7 @@ public class Game implements Runnable {
         bricks = new ArrayList<Brick>();
         score = 0;
         keyManager.setStart(false);
-        countBricks=0;
+        countBricks = 0;
         // Se escoje una mitad con direccion izquierda y la otra a la derecha
         for (int i = 1; i < getWidth() / 60; i++) {
             for (int j = 1; j < (getHeight() * 3 / 5) / 30; j++) {
@@ -143,6 +163,8 @@ public class Game implements Runnable {
             }
         }
     }
+
+
 
     @Override
     public void run() {
@@ -184,8 +206,13 @@ public class Game implements Runnable {
             this.reset();
             win = false;
         } else {
-
             keyManager.tick();
+            if(keyManager.save){
+                resources.saveGame();
+            }
+            if(keyManager.load){
+                resources.loadGame();
+            }
 
             // avancing player and bricks and check collisions 
             if (!keyManager.pause && keyManager.start) {
@@ -193,8 +220,8 @@ public class Game implements Runnable {
                 bullet.tick();
                 //Set direction of bullet depending on which part of the player the bullet hits
                 if (player.intersecta(bullet)) {
-                    bullet.setVelY(-bullet.getVelY());
-                    if ((bullet.getX() > (player.getX() - player.getWidth() / 2)) && (bullet.getX() < (player.getX() + player.getWidth() / 2)) && (bullet.getY() < player.getY()) && (bullet.getY() > (player.getY() - player.getHeight() / 2))) {
+                    bullet.setVelY(-Math.abs(bullet.getVelY()));
+                    if ((bullet.getX() < (player.getX() + player.getWidth() / 2))) {
                         bullet.setVelX(-Math.abs(bullet.getVelX()));
                     } else {
                         bullet.setVelX(Math.abs(bullet.getVelX()));
@@ -204,18 +231,33 @@ public class Game implements Runnable {
                 for (int i = 0; i < bricks.size(); i++) {
                     Brick brick = bricks.get(i);
                     brick.tick();
-                    if (bullet.intersecta(brick)) {
-                        bullet.setVelY(-bullet.getVelY());
+                    if (bullet.intersecta(brick) && !brick.isDead()) {
+                        if ((bullet.getX() < (brick.getX() + brick.getWidth() / 2))) {
+                            bullet.setVelX(-Math.abs(bullet.getVelX()));
+                        } else {
+                            bullet.setVelX(Math.abs(bullet.getVelX()));
+                        }
+
+                        if ((bullet.getY() > (brick.getY() + brick.getHeight() / 2))) {
+                            bullet.setVelY(Math.abs(bullet.getVelY()));
+                        } else {
+                            bullet.setVelY(-Math.abs(bullet.getVelY()));
+                        }
+
                         this.setScore(this.getScore() + 10);
                         Assets.applause.play();
-                        bricks.remove(i);
+                        brick.setDead(true);
+                        
 
                     }
                 }
-                
+
                 // If there are no more bricks in the game (When yo get 650 points), active bullet.EndGame to show Game Over image
-                if (this.getScore() == countBricks * 10 || bullet.isEndGame()) {
+                if (this.getScore() == countBricks * 10) {
                     win = true;
+                    keyManager.setStart(false);
+                }
+                if(bullet.isEndGame()){
                     keyManager.setStart(false);
                 }
             }
@@ -242,18 +284,20 @@ public class Game implements Runnable {
                 g.drawImage(Assets.gameOver, 0, 0, width, height, null);
                 //Set font color to white for the text of Lifes Left:
                 g.setColor(Color.white);
-                g.drawString("Press any button to restart", getWidth()/2-90, getHeight() - 50);
+                g.drawString("Press any button to restart", getWidth() / 2 - 90, getHeight() - 50);
             } else if (win) {
                 g.drawImage(Assets.youWin, 0, 0, width, height, null);
                 g.setColor(Color.white);
-                g.drawString("Press any button to restart", getWidth()/2-90, getHeight() - 50);
+                g.drawString("Press any button to restart", getWidth() / 2 - 90, getHeight() - 50);
             } else {
                 g.drawImage(Assets.background, 0, 0, width, height, null);
                 player.render(g);
                 bullet.render(g);
                 for (int i = 0; i < bricks.size(); i++) {
                     Brick brick = bricks.get(i);
+                    if(!brick.isDead()){
                     brick.render(g);
+                    }
                 }
                 //Set font color to white for the text of Lifes Left:
                 g.setColor(Color.white);
