@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 
 /**
  *
- * @author yeyog
+ * @author Patricio y Diego
  */
 public class SpreadSheet {
         private BufferedImage sheet;    //to store the spritesheet
