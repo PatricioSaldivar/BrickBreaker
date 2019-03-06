@@ -11,7 +11,7 @@ import static java.lang.Math.abs;
 
 /**
  *
- * @author yeyog
+ * @author Patricio y Diego
  */
 public class Bullet extends Item {
     
@@ -24,6 +24,15 @@ public class Bullet extends Item {
     private Animation animationBullet;      //to store the animation of the bullet
     private boolean endGame;                //to store the game status depending in bullet position
     
+     /**
+     * to create bullet with every attribute it have
+     *
+     * @param x to set the x position
+     * @param y to set the y position
+     * @param width to set the width of the bullet
+     * @param height to set the height of the bullet
+     * @param Game to set the game where the bullet is created
+     */
     public Bullet(int x, int y, int width, int height, Game game) {
         super(x, y);
         this.width = width;

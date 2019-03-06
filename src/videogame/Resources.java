@@ -15,7 +15,7 @@ import java.io.BufferedReader;
 
 /**
  *
- * @author PatoSaldivar
+ * @author Patricio y Diego
  */
 public class Resources {
     private Game game;
@@ -24,8 +24,9 @@ public class Resources {
     }
     void saveGame(){
         try {
+            //Creates new file to save the game data
             FileWriter fw = new FileWriter("save.txt");
-             
+            //Saves every value of every object in the game
             fw.write(String.valueOf(game.getScore())+"\n");
             fw.write(String.valueOf(game.getPlayer().getX())+"\n");
             fw.write(String.valueOf(game.getPlayer().getY())+"\n");
@@ -37,12 +38,8 @@ public class Resources {
                 fw.write(String.valueOf(game.getBricks().get(i).getX()) +"\n");
                 fw.write(String.valueOf(game.getBricks().get(i).getY()) +"\n");
                 fw.write(String.valueOf(game.getBricks().get(i).isDead()) +"\n");
-            }
-            
+            }         
             fw.close();
-            
-            
-            
         } catch (IOException ex) {
             Logger.getLogger(Resources.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -50,9 +47,9 @@ public class Resources {
     }
        void loadGame(){
         try {
+            //Loads file where every value of the game was saved
             BufferedReader br = new BufferedReader(new FileReader("save.txt"));
-            
-           
+            //Read every value in the file so it can be loaded
             game.setScore(Integer.parseInt(br.readLine()));
             game.getPlayer().setX(Integer.parseInt(br.readLine()));
             game.getPlayer().setY(Integer.parseInt(br.readLine()));
@@ -65,8 +62,6 @@ public class Resources {
                 game.getBricks().get(i).setY(Integer.parseInt(br.readLine()));
                 game.getBricks().get(i).setDead(Boolean.parseBoolean((br.readLine())));
             }
-            
-            
             br.close();
 
         } catch (IOException ex) {

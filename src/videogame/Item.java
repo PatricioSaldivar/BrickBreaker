@@ -10,7 +10,7 @@ import java.awt.Graphics;
 
 /**
  *
- * @author antoniomejorado
+ * @author Patricio y Diego
  */
 public abstract class Item {
     protected int x;        // to store x position

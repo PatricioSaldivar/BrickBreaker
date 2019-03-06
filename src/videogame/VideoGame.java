@@ -7,7 +7,7 @@ package videogame;
 
 /**
  *
- * @author antoniomejorado
+ * @author Patricio y diego
  */
 public class VideoGame {
 
@@ -15,7 +15,7 @@ public class VideoGame {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        // All code application logic here
         Game g = new Game("Juego", 800, 500);
         g.start();
     }
