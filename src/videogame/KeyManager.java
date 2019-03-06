@@ -18,6 +18,8 @@ public class KeyManager implements KeyListener {
     public boolean right;    // flag to move right the player
     public boolean start=false;   //flag to start moving (game)
     public boolean pause = false;   //flag to pause the game
+    public boolean save;        //flag to save
+    public boolean load;        // flag to load
 
     private boolean keys[];  // to store all the flags for every key
 
@@ -60,5 +62,7 @@ public class KeyManager implements KeyListener {
     public void tick() {
         left = keys[KeyEvent.VK_LEFT];
         right = keys[KeyEvent.VK_RIGHT];
+        save = keys[KeyEvent.VK_G];
+        load = keys[KeyEvent.VK_C];
     }
 }

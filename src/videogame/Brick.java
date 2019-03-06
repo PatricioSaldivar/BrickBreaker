@@ -18,12 +18,14 @@ public class Brick extends Item {
     private int height;
     private Game game;
     private int index;
+    private boolean dead;
     public Brick(int x, int y, int width, int height, Game game, int index) {
         super(x, y);
         this.width = width;
         this.height = height;
         this.game = game;
         this.index = index;
+        dead= false;
     }
 
     /**
@@ -31,6 +33,14 @@ public class Brick extends Item {
      * @return
      */
 
+
+    public void setDead(boolean dead) {
+        this.dead = dead;
+    }
+
+    public boolean isDead() {
+        return dead;
+    }
 
     public int getWidth() {
         return width;

@@ -3,8 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/PatoSaldivar/Desktop/Videojuegos,%20Java/BrickBreaker/src/videogame/KeyManager.java</file>
+            <file>file:/Users/PatoSaldivar/Desktop/Videojuegos,%20Java/BrickBreaker/src/videogame/Resources.java</file>
             <file>file:/Users/PatoSaldivar/Desktop/Videojuegos,%20Java/BrickBreaker/src/videogame/Game.java</file>
+            <file>file:/Users/PatoSaldivar/Desktop/Videojuegos,%20Java/BrickBreaker/src/videogame/Item.java</file>
+            <file>file:/Users/PatoSaldivar/Desktop/Videojuegos,%20Java/BrickBreaker/src/videogame/Bullet.java</file>
+            <file>file:/Users/PatoSaldivar/Desktop/Videojuegos,%20Java/BrickBreaker/src/videogame/Player.java</file>
         </group>
     </open-files>
 </project-private>
