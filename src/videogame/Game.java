@@ -101,8 +101,8 @@ public class Game implements Runnable {
         score = 0;
         keyManager.setStart(false);
         // Se escoje una mitad con direccion izquierda y la otra a la derecha
-        for (int i = 0; i < getWidth() / 60; i++) {
-            for (int j = 0; j < (getHeight() * 3 / 5) / 30; j++) {
+        for (int i = 1; i < getWidth() / 60; i++) {
+            for (int j = 1; j < (getHeight() * 3 / 5) / 30; j++) {
                 iInd = i % 4;
                 iPosX = i * 60;
                 iPosY = j * 30;
