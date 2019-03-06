@@ -80,10 +80,23 @@ public class Brick extends Item {
         this.height = height;
     }
 
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+    
+    
+
 
     @Override
     public void tick() {
-    
+    if(index <0){
+        dead=true;
+    }else
+        dead=false;
     }
 
     public Rectangle getPerimetro() {
@@ -93,6 +106,7 @@ public class Brick extends Item {
 
     @Override
     public void render(Graphics g) {
+        if(index>=0)
         g.drawImage(Assets.brick[index], getX(), getY(), getWidth(), getHeight(), null);
     }
 }

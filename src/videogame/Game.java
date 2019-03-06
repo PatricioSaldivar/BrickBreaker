@@ -10,6 +10,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import static java.lang.Math.abs;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  *
@@ -33,6 +34,8 @@ public class Game implements Runnable {
     private boolean win;            // to manage if the game is ended and you win
     private int countBricks;        // To store the total of bricks
     private Resources resources;    //To load and save the information of the game
+    private int bricksOnGame;       // To store the number of bricks in the game
+    private LinkedList<PowerUp> powerUps;        //To store a powerUp
 
     /**
      * to create title, width and height and set the game is still not running
@@ -47,7 +50,7 @@ public class Game implements Runnable {
         this.height = height;
         running = false;
         keyManager = new KeyManager();
-        resources= new Resources(this);
+        resources = new Resources(this);
 
     }
 
@@ -76,6 +79,7 @@ public class Game implements Runnable {
     public Player getPlayer() {
         return player;
     }
+
     /**
      * To get the score of the game
      *
@@ -84,13 +88,16 @@ public class Game implements Runnable {
     public int getScore() {
         return score;
     }
+
     /**
      * Set the score
+     *
      * @param score <b>score</b> value with the score
      */
     public void setScore(int score) {
         this.score = score;
     }
+
     /**
      * To get the bullet object
      *
@@ -99,6 +106,7 @@ public class Game implements Runnable {
     public Bullet getBullet() {
         return bullet;
     }
+
     /**
      * To get the count of bricks
      *
@@ -107,14 +115,25 @@ public class Game implements Runnable {
     public int getCountBricks() {
         return countBricks;
     }
+
     /**
      * Set the brick counter
+     *
      * @param countBricks <b>countBrciks</b> value with the brick counter
      */
     public void setCountBricks(int countBricks) {
         this.countBricks = countBricks;
     }
-     /**
+
+    public LinkedList<PowerUp> getPowerUps() {
+        return powerUps;
+    }
+
+    public void setPowerUps(LinkedList<PowerUp> powerUps) {
+        this.powerUps = powerUps;
+    }
+
+    /**
      * To get the bricks object
      *
      * @return an <code>ArrayList</code> value with bricks object
@@ -122,7 +141,14 @@ public class Game implements Runnable {
     public ArrayList<Brick> getBricks() {
         return bricks;
     }
-    
+
+    public int getBricksOnGame() {
+        return bricksOnGame;
+    }
+
+    public void setBricksOnGame(int bricksOnGame) {
+        this.bricksOnGame = bricksOnGame;
+    }
 
     /**
      * initializing the display window of the game
@@ -132,6 +158,8 @@ public class Game implements Runnable {
         Assets.init();
         player = new Player(getWidth() / 2 - 75, getHeight() - 50, 1, 150, 50, this);
         bullet = new Bullet(player.getX() + (player.getWidth() / 2), player.getY() - 20, 20, 20, this);
+        powerUps = new LinkedList<PowerUp>();
+
         int iPosX;
         int iPosY;
         int iRen;
@@ -143,12 +171,13 @@ public class Game implements Runnable {
         score = 0;
         keyManager.setStart(false);
         // Se escoje una mitad con direccion izquierda y la otra a la derecha
-        for (int i = 1; i < getWidth() / 60 ; i++) {
-            for (int j = 1; j < (getHeight() * 3 / 5) / 30 ; j++) {
-                iInd = i % 4;
-                iPosX = i * 60;
-                iPosY = j * 30;
+        for (int i = 0; i < (getWidth() / 60) - 1; i++) {
+            for (int j = 0; j < ((getHeight() * 3 / 5) / 30) - 1; j++) {
+                iInd = (j) % 4;
+                iPosX = (i + 1) * 60;
+                iPosY = (j + 1) * 30;
                 countBricks = countBricks + 1;
+                bricksOnGame = bricksOnGame + 1;
                 bricks.add(new Brick(iPosX, iPosY, 60, 30, this, iInd));
             }
         }
@@ -172,22 +201,22 @@ public class Game implements Runnable {
         int iInd;
         // creating my bricks list
         bricks = new ArrayList<Brick>();
+        powerUps = new LinkedList<PowerUp>();
         score = 0;
         keyManager.setStart(false);
         countBricks = 0;
         // Se escoje una mitad con direccion izquierda y la otra a la derecha
-        for (int i = 1; i < getWidth() / 60; i++) {
-            for (int j = 1; j < (getHeight() * 3 / 5) / 30; j++) {
-                iInd = i % 4;
-                iPosX = i * 60;
-                iPosY = j * 30;
+        for (int i = 0; i < (getWidth() / 60) - 1; i++) {
+            for (int j = 0; j < ((getHeight() * 3 / 5) / 30) - 1; j++) {
+                iInd = (j) % 4;
+                iPosX = (i + 1) * 60;
+                iPosY = (j + 1) * 30;
                 countBricks = countBricks + 1;
+                bricksOnGame = bricksOnGame + 1;
                 bricks.add(new Brick(iPosX, iPosY, 60, 30, this, iInd));
             }
         }
     }
-
-
 
     @Override
     public void run() {
@@ -230,10 +259,10 @@ public class Game implements Runnable {
             win = false;
         } else {
             keyManager.tick();
-            if(keyManager.save){
+            if (keyManager.save) {
                 resources.saveGame();
             }
-            if(keyManager.load){
+            if (keyManager.load) {
                 resources.loadGame();
             }
 
@@ -251,9 +280,13 @@ public class Game implements Runnable {
                     }
                 }
                 //creates bricks      
+                bricksOnGame= bricks.size()-1;
                 for (int i = 0; i < bricks.size(); i++) {
                     Brick brick = bricks.get(i);
                     brick.tick();
+                    if(brick.isDead()){
+                     bricksOnGame = bricksOnGame - 1;
+                    }
                     //checks if bullet intersects brick
                     if (bullet.intersecta(brick) && !brick.isDead()) {
                         //change direction of bullet depending where it hits in X
@@ -269,26 +302,45 @@ public class Game implements Runnable {
                             bullet.setVelY(-Math.abs(bullet.getVelY()));
                         }
                         //Add points to score
-                        this.setScore(this.getScore() + 10);
+                        score = score + 10;
                         //Plays sound everytime bullet hits brick
                         Assets.bounce.play();
-                        brick.setDead(true);
-                        
+                        brick.setIndex(brick.getIndex() - 1);
 
+                        //if (((int) (Math.random() * 20)) == 1) {
+                            powerUps.add(new PowerUp(brick.getX(), brick.getY(), this));
+                       // }
+
+                    }
+                }
+                for (int i = 0; i < powerUps.size(); i++) {
+                    PowerUp power = powerUps.get(i);
+                    power.tick();
+                    if (power.intersecta(getPlayer())) {
+                        for (int k = 0; k < countBricks; k++) {
+                            score = score + 10;
+
+                            bricks.get(k).setIndex(bricks.get(k).getIndex() - 1);
+                        }
+                        powerUps.remove(i);
+                    }
+                    if (power.getY() > height) {
+                        powerUps.remove(i);
                     }
                 }
 
                 // If there are no more bricks in the game (When yo get 650 points), active bullet.EndGame to show Game Over image
-                if (this.getScore() == countBricks * 10) {
+                if (bricksOnGame <= 0) {
                     win = true;
                     keyManager.setStart(false);
                     Assets.applause.play();
                 }
-                if(bullet.isEndGame()){
+                if (bullet.isEndGame()) {
                     keyManager.setStart(false);
                     Assets.boo.play();
                 }
             }
+
         }
     }
 
@@ -313,21 +365,25 @@ public class Game implements Runnable {
                 //Set font color to white for the text of Lifes Left:
                 g.setColor(Color.white);
                 g.drawString("Press any button to restart", getWidth() / 2 - 90, getHeight() - 50);
-            //Shows You Win image and stop the game if there are not more bricks in the game
+                //Shows You Win image and stop the game if there are not more bricks in the game
             } else if (win) {
                 g.drawImage(Assets.youWin, 0, 0, width, height, null);
                 g.setColor(Color.white);
                 g.drawString("Press any button to restart", getWidth() / 2 - 90, getHeight() - 50);
-            //If the game hasn´t end, the game is painted
+                //If the game hasn´t end, the game is painted
             } else {
                 g.drawImage(Assets.background, 0, 0, width, height, null);
                 player.render(g);
                 bullet.render(g);
                 for (int i = 0; i < bricks.size(); i++) {
                     Brick brick = bricks.get(i);
-                    if(!brick.isDead()){
-                    brick.render(g);
+                    if (!brick.isDead()) {
+                        brick.render(g);
                     }
+                }
+                for (int i = 0; i < powerUps.size(); i++) {
+                    PowerUp power = powerUps.get(i);
+                    power.render(g);
                 }
                 //Set font color to white for the text of Lifes Left:
                 g.setColor(Color.white);

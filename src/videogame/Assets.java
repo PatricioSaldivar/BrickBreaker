@@ -21,6 +21,7 @@ public class Assets {
     public static BufferedImage brick[];       // to store the diferent bricks
     public static BufferedImage gameOver;      // to store gameover image
     public static BufferedImage youWin;        // to store youwin image
+    public static BufferedImage powerUp;        // to store PowerUp image
     public static SoundClip boo;                // to store the boo sound
     public static SoundClip applause;           // to store the applause sound
     public static SoundClip bounce;             // to store the bounce sound 
@@ -31,7 +32,7 @@ public class Assets {
      */
     public static void init() {
         //getting the four diferente images that brick can have
-        brick = new BufferedImage[4];
+        brick = new BufferedImage[5];
         background = ImageLoader.loadImage("/images/fondoBB.jpg");
         brick[0] = ImageLoader.loadImage("/images/Pill1.png");
         brick[1] = ImageLoader.loadImage("/images/Pill2.png");
@@ -39,6 +40,8 @@ public class Assets {
         brick[3] = ImageLoader.loadImage("/images/Pill4.png");       
         gameOver = ImageLoader.loadImage("/images/gameover.jpg");
         youWin = ImageLoader.loadImage("/images/youwin.jpg");
+        powerUp = ImageLoader.loadImage("/images/PowerUp.png");
+        
         boo = new SoundClip ("/sounds/Boo.wav");
         applause = new SoundClip ("/sounds/Applause.wav");
         bounce = new SoundClip ("/sounds/bouncing.wav");
