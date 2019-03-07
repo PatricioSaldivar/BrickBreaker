@@ -124,11 +124,19 @@ public class Game implements Runnable {
     public void setCountBricks(int countBricks) {
         this.countBricks = countBricks;
     }
-
+        /**
+     * To get the Powerups objects
+     *
+     * @return an <code>LinkedList</code> value with powerUps
+     */
     public LinkedList<PowerUp> getPowerUps() {
         return powerUps;
     }
-
+     /**
+     * Set the powerUps objects
+     *
+     * @param powerUps <b>PowerUp</b> value with powerUps
+     */
     public void setPowerUps(LinkedList<PowerUp> powerUps) {
         this.powerUps = powerUps;
     }
@@ -141,11 +149,19 @@ public class Game implements Runnable {
     public ArrayList<Brick> getBricks() {
         return bricks;
     }
-
+     /**
+     * To get the number of total bricks on the game
+     *
+     * @return an <code>int</code> value with bricksOnGame
+     */
     public int getBricksOnGame() {
         return bricksOnGame;
     }
-
+     /**
+     * Set the total of bricks on the game
+     *
+     * @param bricksOnGame <b>bricksOnGame</b> value with brickOnGame
+     */
     public void setBricksOnGame(int bricksOnGame) {
         this.bricksOnGame = bricksOnGame;
     }
@@ -254,10 +270,12 @@ public class Game implements Runnable {
     }
 
     private void tick() {
+        //Resets game if you press any key in GameOver or You Win screen
         if ((win || bullet.isEndGame()) && keyManager.start) {
             this.reset();
             win = false;
         } else {
+            //saves and load game tick
             keyManager.tick();
             if (keyManager.save) {
                 resources.saveGame();
@@ -307,15 +325,17 @@ public class Game implements Runnable {
                         Assets.bounce.play();
                         brick.setIndex(brick.getIndex() - 1);
 
-                        //if (((int) (Math.random() * 20)) == 1) {
+                        if (((int) (Math.random() * 20)) == 1) {
                             powerUps.add(new PowerUp(brick.getX(), brick.getY(), this));
-                       // }
+                        }
 
                     }
                 }
+                //Create powerUps tick
                 for (int i = 0; i < powerUps.size(); i++) {
                     PowerUp power = powerUps.get(i);
                     power.tick();
+                    //If the player gets a power every brick life descrease by one
                     if (power.intersecta(getPlayer())) {
                         for (int k = 0; k < countBricks; k++) {
                             score = score + 10;
@@ -329,7 +349,7 @@ public class Game implements Runnable {
                     }
                 }
 
-                // If there are no more bricks in the game (When yo get 650 points), active bullet.EndGame to show Game Over image
+                // If there are no more bricks in the game (When you get 650 points), active bullet.EndGame to show Game Over image
                 if (bricksOnGame <= 0) {
                     win = true;
                     keyManager.setStart(false);
